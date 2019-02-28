@@ -257,30 +257,6 @@ def transform_date(utc, timezone=None):
     return new_date
     """ возвращается модифицированная дата """
 
-
-def read_data(fname):
-    # Считать содержимое CSV 
-    df = pd.read_csv(fname)
-    """df-переменная содержащая данные файла, в нее их закачивает метод read_csv(), если csv изменить Exel то csv не работает
-    fname-параметр, у нас в программе это путь к файлу
-    """
-
-    # Удалить неправильные величины 
-    df = df.drop(df[df.mag < 0].index)
-    magnitudes = df["mag"]
-    """в список magnitudes записываются из столбца mag"""
-
-    #  Мой местный часовой пояс 
-    timezone = QTimeZone(b"Europe/Berlin")
-
-    # Получить временную метку, преобразованную в наш часовой пояс
-    times = df["time"].apply(lambda x: transform_date(x, timezone))
-    """запускается функция transform_date """
-
-    return times, magnitudes
-"""сформировалось два списка times, magnitudes-остальные столбцы игнорируются"""
-
-
 class MainWindow(QMainWindow):
     def __init__(self, widget):
         """конструктор наешго класса, в нем мы запускаем конструктор прописанного класса QMainWindow """
@@ -324,7 +300,7 @@ if __name__ == "__main__":
     # args = options.parse_args()
     # data = read_data(args.file)
     # data = read_data("C:/Users/79687/Downloads/all_hour.csv") #НАДО МЕНЯТЬ СЛЭШ С ТАКОГО "/" НА "\" В ЭТОМ ЯЗЫКЕ
-    data = read_data("all_hour.csv") #НАДО МЕНЯТЬ СЛЭШ С ТАКОГО "/" НА "\" В ЭТОМ ЯЗЫКЕ
+    # data = read_data("all_hour.csv") #НАДО МЕНЯТЬ СЛЭШ С ТАКОГО "/" НА "\" В ЭТОМ ЯЗЫКЕ
 
     # Qt Application
     app = QApplication(sys.argv)
